@@ -1,7 +1,7 @@
 {
-	"name": "grit-cli",
-	"version": "0.5.8",
-	"description": "Simple and flexible scaffolding",
+	"name": "clifi",
+	"version": "0.0.0",
+	"description": "Route based cli framework",
 	"main": "dist/index.js",
 	"bin": {
 		"grit": "dist/cli/index.js"
@@ -33,6 +33,7 @@
 		"commander": "^8.3.0",
 		"inquirer": "^8.2.0",
 		"ora": "^6.0.1",
+		"swaglog": "^0.0.0",
 		"update-notifier": "^5.1.0"
 	},
 	"devDependencies": {

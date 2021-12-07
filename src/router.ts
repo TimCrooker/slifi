@@ -1,7 +1,5 @@
 import chalk from 'chalk'
-import { Logger } from './logger'
 import { CLI } from './cli'
-import { GritError } from '@/error'
 
 export const BackChoice = {
 	name: 'Go Back',
@@ -66,12 +64,12 @@ export class Router<RuntimeEnvInstance = any> {
 				await this.routes[route](context, args)
 			} catch (error) {
 				this.routeHistory.pop()
-				throw new GritError(
+				throw new Error(
 					'Something went wrong in the route : ' + chalk.yellow(route)
 				)
 			}
 		} else {
-			this.logger.error(`No routes named:`, chalk.yellow(route))
+			this.logger.error(`No routes named:`, colors.yellow(route))
 		}
 		return this
 	}
