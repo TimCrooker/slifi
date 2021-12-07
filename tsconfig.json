@@ -1,0 +1,37 @@
+{
+	"compilerOptions": {
+		"target": "es2018",
+		"module": "commonjs",
+		"outDir": "./dist",
+		"sourceMap": true,
+		"declaration": true,
+		"resolveJsonModule": true,
+		"strict": true,
+		"esModuleInterop": true,
+		"skipLibCheck": true,
+		"forceConsistentCasingInFileNames": true,
+		"baseUrl": "./src",
+		"moduleResolution": "node",
+		"noImplicitAny": false,
+		"types": [
+			"node",
+			"jest"
+		],
+		"paths": {
+			"@": [
+				"./"
+			],
+			"@/*": [
+				"./*"
+			]
+		}
+	},
+	"include": [
+		"src"
+	],
+	"exclude": [
+		"dist/",
+		"test/",
+		"docs/"
+	]
+}
