@@ -1,5 +1,6 @@
 import chalk from 'chalk'
-import { CLI } from './cli'
+import { colors, logger } from 'swaglog'
+import { CLI } from '..'
 
 export const BackChoice = {
 	name: 'Go Back',
@@ -24,9 +25,7 @@ type Navigate = { route: string; args: any; context: CLI }
 
 type RouteHistory = Navigate[]
 
-export interface RouterOptions {
-	logger: Logger
-}
+export interface RouterOptions {}
 
 /**
  * The router is in charge of handling `yo` different screens.
@@ -34,14 +33,12 @@ export interface RouterOptions {
 export class Router<RuntimeEnvInstance = any> {
 	routes: Routes<RuntimeEnvInstance>
 
-	logger: Logger
+	logger = logger
 
 	routeHistory: RouteHistory = []
 
 	constructor(opts: RouterOptions) {
 		this.routes = {}
-
-		this.logger = opts.logger
 	}
 
 	/**

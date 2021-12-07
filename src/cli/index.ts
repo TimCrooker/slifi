@@ -1,11 +1,11 @@
 import chalk from 'chalk'
 import inquirer, { Answers, QuestionCollection } from 'inquirer'
 import updateNotifier, { Package } from 'update-notifier'
-import { logger } from './logger'
-import { commander } from './utils/commander'
+import { commander } from '../utils/commander'
 import { Route, Router, RouterOptions } from './router'
-import { spinner } from './spinner'
+import { spinner } from '../utils/spinner'
 import { SetRequired } from 'type-fest'
+import { logger } from 'swaglog'
 
 export interface CLIOptions<RuntimeEnvInstance = any> {
 	pkg: Package
@@ -40,13 +40,6 @@ export class CLI<RuntimeEnvInstance = any> {
 		// Configure CLI router
 		const routerOpts = { logger: this.logger } as RouterOptions
 		this.router = new Router(routerOpts)
-
-		// Add autocomplete prompts to inquirer
-		inquirer.registerPrompt(
-			'autocomplete',
-			// eslint-disable-next-line @typescript-eslint/no-var-requires
-			require('inquirer-autocomplete-prompt')
-		)
 	}
 
 	async run(): Promise<void> {
