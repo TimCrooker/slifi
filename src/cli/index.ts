@@ -1,11 +1,10 @@
-import chalk from 'chalk'
 import inquirer, { Answers, QuestionCollection } from 'inquirer'
 import updateNotifier, { Package } from 'update-notifier'
 import { commander } from '../utils/commander'
 import { Route, Router, RouterOptions } from './router'
 import { spinner } from '../utils/spinner'
 import { SetRequired } from 'type-fest'
-import { logger } from 'swaglog'
+import { colors, logger } from 'swaglog'
 
 export interface CLIOptions<RuntimeEnvInstance = any> {
 	pkg: Package
@@ -14,15 +13,15 @@ export interface CLIOptions<RuntimeEnvInstance = any> {
 	env?: RuntimeEnvInstance
 }
 
-export class CLI<RuntimeEnvInstance = any> {
+export class CLI {
 	opts: SetRequired<CLIOptions, 'debug' | 'mock'>
-
-	private router: Router<RuntimeEnvInstance>
 	logger = logger
+	colors = colors
 	commander = commander
 	inquirer = inquirer
 	spinner = spinner
-	chalk = chalk
+
+	private router: Router
 
 	constructor(opts: CLIOptions) {
 		this.opts = {
@@ -45,7 +44,7 @@ export class CLI<RuntimeEnvInstance = any> {
 	async run(): Promise<void> {
 		!this.opts.debug && console.clear()
 
-		this.logger.debug('CLI running...')
+		logger.debug('CLI running...')
 
 		await this.updateCheck()
 
@@ -59,17 +58,17 @@ export class CLI<RuntimeEnvInstance = any> {
 		if (notifier.current !== notifier.latest) {
 			this.logger.log(
 				'Update available: ',
-				this.chalk.green.bold(notifier.latest),
-				chalk.gray(' (current: ' + notifier.current + ')'),
+				colors.green.bold(notifier.latest),
+				colors.gray(' (current: ' + notifier.current + ')'),
 				'Run',
-				this.chalk.magenta('npm install -g ' + pkg.name),
+				colors.magenta('npm install -g ' + pkg.name),
 				'to update.'
 			)
 		}
 	}
 
 	/** Add a CLI Route */
-	addRoute(route: string, handler: Route<RuntimeEnvInstance>): this {
+	addRoute(route: string, handler: Route): this {
 		this.router.registerRoute(route, handler)
 		return this
 	}
@@ -84,10 +83,10 @@ export class CLI<RuntimeEnvInstance = any> {
 		// get arguments from commander and strip off the command
 		const args = this.commander.args
 
-		this.logger.debug(
-			chalk.yellow('Grit CLI options:'),
+		logger.debug(
+			colors.yellow('Grit CLI options:'),
 			options,
-			chalk.cyan('Grit CLI args:'),
+			colors.cyan('Grit CLI args:'),
 			args
 		)
 

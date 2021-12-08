@@ -1,4 +1,5 @@
-import chalk from 'chalk'
+/* eslint-disable @typescript-eslint/no-empty-interface */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { colors, logger } from 'swaglog'
 import { CLI } from '..'
 
@@ -7,8 +8,8 @@ export const BackChoice = {
 	value: 'back',
 }
 
-export type Route<RuntimeEnvInstance = any> = (
-	app: CLI<RuntimeEnvInstance>,
+export type Route = (
+	app: CLI,
 	input: {
 		/** args passed from the initial command line */
 		args: any[]
@@ -17,8 +18,8 @@ export type Route<RuntimeEnvInstance = any> = (
 	}
 ) => void | Promise<void>
 
-type Routes<RuntimeEnvInstance = any> = {
-	[k: string]: Route<RuntimeEnvInstance>
+type Routes = {
+	[k: string]: Route
 }
 
 type Navigate = { route: string; args: any; context: CLI }
@@ -30,8 +31,8 @@ export interface RouterOptions {}
 /**
  * The router is in charge of handling `yo` different screens.
  */
-export class Router<RuntimeEnvInstance = any> {
-	routes: Routes<RuntimeEnvInstance>
+export class Router {
+	routes: Routes
 
 	logger = logger
 
@@ -47,7 +48,7 @@ export class Router<RuntimeEnvInstance = any> {
 	 * @param args the arguments to pass to the route handler
 	 */
 	async navigate(route: string, args: any, context: CLI): Promise<this> {
-		this.logger.debug('Navigating to route:', chalk.yellow(route))
+		logger.debug('Navigating to route:', colors.yellow(route))
 
 		if (route === 'back') {
 			await this.goBack()
@@ -62,11 +63,11 @@ export class Router<RuntimeEnvInstance = any> {
 			} catch (error) {
 				this.routeHistory.pop()
 				throw new Error(
-					'Something went wrong in the route : ' + chalk.yellow(route)
+					'Something went wrong in the route : ' + colors.yellow(route)
 				)
 			}
 		} else {
-			this.logger.error(`No routes named:`, colors.yellow(route))
+			logger.error(`No routes named:`, colors.yellow(route))
 		}
 		return this
 	}
