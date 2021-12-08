@@ -9,7 +9,6 @@
 		"!**/*.(test|spec).ts"
 	],
 	"scripts": {
-		"start": "npm run build && npm run cli",
 		"build:watch": "nodemon --watch src -e ts --ignore dist --exec npm run build",
 		"build": "npm run clean && tsup src/index.ts --dts",
 		"clean": "rimraf ./dist",
@@ -27,7 +26,7 @@
 		"chalk": "4.1.2",
 		"commander": "^8.3.0",
 		"inquirer": "^8.2.0",
-		"ora": "^6.0.1",
+		"ora": "4.1.1",
 		"swaglog": "^0.0.0",
 		"update-notifier": "^5.1.0"
 	},
