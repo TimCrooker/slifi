@@ -14,6 +14,7 @@ export interface CLIOptions<RuntimeEnvInstance = any> {
 }
 
 export class CLI {
+	pkg: Package
 	opts: SetRequired<CLIOptions, 'debug' | 'mock'>
 	logger = logger
 	colors = colors
@@ -39,6 +40,9 @@ export class CLI {
 		// Configure CLI router
 		const routerOpts = { logger: this.logger } as RouterOptions
 		this.router = new Router(routerOpts)
+
+		this.pkg = opts.pkg
+		this.commander.name(this.pkg.name).version(this.pkg.version)
 	}
 
 	async run(): Promise<void> {
