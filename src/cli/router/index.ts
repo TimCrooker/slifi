@@ -63,7 +63,7 @@ export class Router {
 			} catch (error) {
 				this.routeHistory.pop()
 				throw new Error(
-					'Something went wrong in the route : ' + colors.yellow(route)
+					`Something went wrong in the ${colors.yellow(route)} route: ${error}`
 				)
 			}
 		} else {
@@ -83,7 +83,7 @@ export class Router {
 			const { route, args, context } = lastCall
 			await this.navigate(route, args, context)
 		} else {
-			this.logger.error(
+			logger.error(
 				'No route history to go back to. You are at the first route.'
 			)
 		}
