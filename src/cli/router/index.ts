@@ -62,9 +62,7 @@ export class Router {
 				await this.routes[route](context, args)
 			} catch (error) {
 				this.routeHistory.pop()
-				throw new Error(
-					`Something went wrong in the ${colors.yellow(route)} route: ${error}`
-				)
+				logger.error(error)
 			}
 		} else {
 			logger.error(`No routes named:`, colors.yellow(route))
